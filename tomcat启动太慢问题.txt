@@ -1,0 +1,11 @@
+原因：/dev/random会根据噪音产生随机数，如果噪音不够它就会阻塞。Linux是通过I/O，键盘终端、内存使用量、CPU利用率等方式来收集噪音的，如果噪音不够生成随机数的时候就会被阻塞。
+
+方法一：（1）通过修改Tomcat启动文件-Djava.security.egd=file:/dev/urandom
+	（2）通过修改JRE中的java.security文件securerandom.source=file:/dev/urandom
+
+方法二：上面方法只是解决tomcat问题其它服务如nginx weblogic也会遇到这问题，所以增大/dev/random的熵池。问题的原因是由于熵池不够大，所以增大它是最彻底的方法
+yum install rng-tools  安装rngd服务（熵服务）
+systemctl start rngd  启动服务
+systemctl enable rngd  设置开机启动
+
+然后观察  watch -n 1 cat /proc/sys/kernel/random/entropy_avail  这个值一般在3000左右
