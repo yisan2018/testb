@@ -105,3 +105,4 @@ mysql>GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION
 二：查看mysql安装路径 whereis mysql(只查看运行文件所在路径which mysql)
 三：查看mysql的连接时间：show variables like 'wait_timeout';
    
+222
